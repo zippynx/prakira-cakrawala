@@ -1,0 +1,277 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Merriweather', serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+body.day {
+  background-color: #fef3bd;
+}
+
+body.night {
+  background-color: #0d1b2a;
+}
+
+.weather-card {
+  position: relative;
+  z-index: 1;
+  border-radius: 20px;
+  padding: 20px;
+  width: 360px;
+  height: 600px;
+  text-align: center;
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.weather-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 10px;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #00cfff, #ffe15d);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+.weather-card.day::before {
+  background: linear-gradient(135deg, #00cfff, #ffe15d);
+}
+
+.weather-card.night::before {
+  background: linear-gradient(135deg, #59ccca, #003466);
+}
+
+.weather-card.day {
+  background: url('./assets/day-mountain.png') no-repeat center bottom;
+  background-size: cover;
+  background-color: #fef3bd;
+}
+
+.weather-card.night {
+  background: url('./assets/night-mountain.png') no-repeat center bottom;
+  background-size: cover;
+  background-color: #0d1b2a;
+}
+
+/* --- Styling Search Box Elegan --- */
+.search-box {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 5px;
+  gap: 8px;
+  z-index: 2;
+}
+
+.search-box input {
+  padding: 8px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  font-family: 'Merriweather', serif;
+  outline: none;
+  width: 70%;
+  font-size: 14px;
+}
+
+.search-box input::placeholder {
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+}
+
+.search-box button {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5px);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-box button:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* Bagian Atas Cuaca */
+.weather-top {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  z-index: 2;
+}
+
+.weather-top .city {
+  font-size: 38px;
+  font-weight: 400;
+  text-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+}
+
+.weather-top .date {
+  font-size: 16px;
+  font-weight: 400;
+  text-shadow: 0px 0px 3px rgba(0,0,0,0.6);
+}
+
+.weather-top .details-top {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  gap: 80px; 
+  font-size: 14px;
+  font-weight: 400;
+  text-shadow: 0px 0px 4px rgba(0,0,0,0.6);
+}
+
+/* Animasi Matahari & Bulan */
+.sun {
+  width: 80px;
+  height: 80px;
+  background: #fff8b0;
+  border-radius: 50%;
+  position: absolute;
+  top: 160px; 
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 30px #ffd700;
+  animation: sunPulse 3s ease-in-out infinite;
+  z-index: 0;
+  display: none;
+}
+
+.moon {
+  width: 80px;
+  height: 80px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 160px; 
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 30px #fff;
+  animation: moonPulse 3s ease-in-out infinite;
+  z-index: 0;
+  display: none; 
+}
+
+@keyframes sunPulse {
+  0%, 100% { box-shadow: 0 0 30px #ffd700; }
+  50% { box-shadow: 0 0 40px #ffd700; }
+}
+
+@keyframes moonPulse {
+  0%, 100% { box-shadow: 0 0 30px #fff; }
+  50% { box-shadow: 0 0 40px #fff; }
+}
+
+.sun, .moon {
+  transition: opacity 0.5s ease;
+}
+
+/* Bagian Tengah Cuaca */
+.weather-center {
+  display: flex;
+  align-items: center;
+  margin-top: 120px; 
+  gap: 10px;
+  z-index: 2;
+}
+
+.weather-center .weather-icon {
+  font-size: 52px;
+  margin: 10px 0;
+  text-shadow: 0px 0px 4px rgba(0,0,0,0.6);
+}
+
+.temperature {
+  font-size: 36px;
+  color: white;
+}
+
+.condition {
+  font-size: 14px;
+  color: white;
+}
+
+/* Kotak Bawah (Forecast) - Presisi Kanan Kiri & Scrollable */
+#forecast {
+  margin-top: auto; 
+  width: 100%;
+  z-index: 2;
+}
+
+.forecast-grid {
+  display: flex;
+  justify-content: flex-start; 
+  gap: 10px;
+  width: 100%;
+  overflow-x: auto; 
+  padding-bottom: 10px; 
+}
+
+/* Kustomisasi Scrollbar */
+.forecast-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.forecast-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+.forecast-grid::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+}
+
+.forecast-item {
+  background: rgba(78, 77, 77, 0.25);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 14px;
+  backdrop-filter: blur(3px);
+  color: #fff;
+  text-align: center;
+  flex: 0 0 calc(50% - 5px); 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-item .weather-icon {
+  font-size: 32px;
+  margin: 4px 0;
+}
+
+.weather-day {
+  font-size: 14px;  
+}
+
+.temperature-card {
+  font-size: 18px;
+  color: white;
+}
