@@ -134,4 +134,4 @@ document.getElementById("city-input").addEventListener("keypress", (e) => {
 
 window.onload = () => {
   getWeatherByCity(currentCity);
-};
+}; 
